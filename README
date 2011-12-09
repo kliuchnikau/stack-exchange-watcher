@@ -1,1 +1,8 @@
-Daemon to watch for new questions on stack exchange sites. Watch for questions tagged with tags from my preferences on stack exchange sites of for tags specified in the daemon preferences. UI should be available for Kubuntu and for Android 2.3.4+
+Daemon to watch for new questions on stack exchange sites. Watch for questions tagged with tags from my preferences on stack exchange sites of for tags specified in the daemon preferences. UI for notifications should be available for Kubuntu and for Android 2.3.4+ and possibly via Jabber.
+
+Possible technologies choice:
+* Ruby 1.9.3
+* Shoes (GUI ruby framework)
+* Ruboto or Rhodes (framework for writing Android apps in Ruby)
+* Android SDK 2.3.4
+* Stack Exchange API
