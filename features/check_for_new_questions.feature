@@ -8,7 +8,7 @@ Feature: Check for new questions by specified tag
     And I have not checked for "ruby" updates in the past
     When I check for new questions
     Then I receive 30 latest answers for specified tag
-    And They are sorted from most to least recent
+    And Answers are sorted from most to least recent
 
   Scenario: Second time for specified tag after small time period
     Given I specified tag "ruby"
@@ -16,7 +16,7 @@ Feature: Check for new questions by specified tag
     And There are 20 new questions for specified tag since my last check
     When I check for new questions
     Then I receive 20 latest answers for specified tag
-    And They are sorted from most to least recent
+    And Answers are sorted from most to least recent
 
   Scenario: Second time for specified tag after long time period
     Given I specified tag "ruby"
@@ -24,4 +24,4 @@ Feature: Check for new questions by specified tag
     And There are 100 new questions for specified tag since my last check
     When I check for new questions
     Then I receive 30 latest answers for specified tag
-    And They are sorted from most to least recent
+    And Answers are sorted from most to least recent
