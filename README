@@ -8,3 +8,4 @@ Possible technologies choice:
 * Stack Exchange API (via rubyoverflow 1.0.2 gem)
 * RSpec
 * Cucumber
+* SQLite

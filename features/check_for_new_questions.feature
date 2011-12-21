@@ -3,13 +3,16 @@ Feature: Check for new questions by specified tag
   I want to periodically check for new questions by specified tag
   So that I can track the new questions without visiting the stack exchange site and answer them as soon as they are posted.
 
+  @wip
   Scenario: First time for specified tag
     Given I specified tag "ruby"
     And I have not checked for "ruby" updates in the past
     When I check for new questions
-    Then I receive 30 latest answers for specified tag
+    Then I see a message "Found 30 new answers"
+    And I receive description of  30 latest answers for specified tag
     And Answers are sorted from most to least recent
 
+  @analyze
   Scenario: Second time for specified tag after small time period
     Given I specified tag "ruby"
     And I have checked for "ruby" updates in the past
@@ -18,6 +21,7 @@ Feature: Check for new questions by specified tag
     Then I receive 20 latest answers for specified tag
     And Answers are sorted from most to least recent
 
+  @analyze
   Scenario: Second time for specified tag after long time period
     Given I specified tag "ruby"
     And I have checked for "ruby" updates in the past
