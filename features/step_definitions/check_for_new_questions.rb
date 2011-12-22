@@ -17,7 +17,7 @@ Given /^I specified tag "([^"]*)"$/ do |tag|
 end
 
 Given /^I have not checked for "([^"]*)" updates in the past$/ do |tag|
-  @questions_watcher = Watcher::QuestionsManager.new(output)
+  @questions_watcher = StackExchange::Questions.new(output)
 end
 
 When /^I check for new questions$/ do

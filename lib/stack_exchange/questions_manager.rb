@@ -1,5 +1,5 @@
-module Watcher
-  class QuestionsManager
+module StackExchange
+  class Questions
     def initizlize output
       @output = output
     end
