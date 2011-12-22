@@ -2,9 +2,10 @@
 $LOAD_PATH.unshift File.expand_path('../../lib/', __FILE__)
 require 'stack_exchange'
 
+CONFIG_FOLDER = File.expand_path('../../config', __FILE__)
+
 def get_se_client
   require 'yaml'
-  CONFIG_FOLDER = File.expand_path('../../config', __FILE__)
   config = YAML.load_file("#{CONFIG_FOLDER}/stack_exchange.yml")
 
   require 'rubyoverflow'
@@ -18,4 +19,15 @@ end
 
 requestor = get_se_client()
 
+@client = Rubyoverflow::Users.retrieve_all
+@client.users.fetch
+
 um = StackExchange::UserManager.new(requestor)
+
+res = requestor.users
+
+res2 = requestor.users.fetch
+
+puts res.inspect
+
+puts res2.inspect

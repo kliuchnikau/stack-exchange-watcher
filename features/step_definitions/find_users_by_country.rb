@@ -11,15 +11,15 @@ Given /^I want to search on "([^"]*)"$/ do |site|
 end
 
 Given /^I want to search for users from "([^"]*)"$/ do |country|
-	user_filter[:country] = country
+	@country = country
 end
 
 Given /^I want to search for users with reputation higher than (\d+)$/ do |reputation|
-	user_filter[:min_reputation] = reputation
+	@min_reputation = reputation
 end
 
 When /^I perform search for users$/ do
-	@users = StackExchange::UserManager.new(@requestor).find(user_filter)
+	@users = StackExchange::UserManager.new(@requestor).find_from_country(@country, @min_reputation)
 end
 
 Then /^Among other I should get the following users:$/ do |id_name_table|
