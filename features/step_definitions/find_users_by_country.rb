@@ -15,7 +15,7 @@ Given /^I want to search for users with reputation higher than (\d+)$/ do |reput
 end
 
 When /^I perform search for new user$/ do
-	@users = StackExchange::User.find(filter)
+	@users = StackExchange::UserManager.find(filter)
 end
 
 Then /^Among other I should get the following users:$/ do |id_name_table|

@@ -1,5 +1,5 @@
 module StackExchange
-  class User
+  class UserManager
     def self.find filter
 
     end
