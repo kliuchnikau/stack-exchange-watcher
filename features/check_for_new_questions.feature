@@ -1,3 +1,4 @@
+@paused
 Feature: Check for new questions by specified tag
   As a stack exchange site user
   I want to periodically check for new questions by specified tag

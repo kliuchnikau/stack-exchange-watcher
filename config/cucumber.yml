@@ -1,2 +1,2 @@
-wip: '--tags @wip'
+wip: '--tags @wip --tags ~@paused'
 default: '--profile wip'
