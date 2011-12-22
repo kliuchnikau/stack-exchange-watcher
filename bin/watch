@@ -2,15 +2,20 @@
 $LOAD_PATH.unshift File.expand_path('../../lib/', __FILE__)
 require 'stack_exchange'
 
-require 'yaml'
-CONFIG_FOLDER = File.expand_path('../../config', __FILE__)
-config = YAML.load_file("#{CONFIG_FOLDER}/stack_exchange.yml")
+def get_se_client
+  require 'yaml'
+  CONFIG_FOLDER = File.expand_path('../../config', __FILE__)
+  config = YAML.load_file("#{CONFIG_FOLDER}/stack_exchange.yml")
 
-require 'rubyoverflow'
-requestor = Rubyoverflow::Client.config do |options|
-  options.host = config['host']
-  options.api_key = config['api_key']
-  options.version = config['api_version']
+  require 'rubyoverflow'
+  requestor = Rubyoverflow::Client.config do |options|
+    options.host = config['host']
+    options.api_key = config['api_key']
+    options.version = config['api_version']
+  end
+  requestor
 end
+
+requestor = get_se_client()
 
 um = StackExchange::UserManager.new(requestor)

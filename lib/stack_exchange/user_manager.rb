@@ -1,6 +1,10 @@
 module StackExchange
   class UserManager
-    def self.find filter
+    def initialize se_api_client
+      @api = se_api_client
+    end
+
+    def find filter
 
     end
   end

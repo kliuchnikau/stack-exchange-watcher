@@ -1,21 +1,25 @@
-def filter
+def user_filter
 	@filter ||= {}
 end
 
-Given /^I want to search for users of "([^"]*)"$/ do |site|
-	filter[:site] = site
+Given /^I want to search on "([^"]*)"$/ do |site|
+  require 'rubyoverflow'
+  @requestor = Rubyoverflow::Client.config do |options|
+    options.host = 'http://api.stackoverflow.com' if site =~ /Stack Overflow/
+    options.version = '1.1'
+  end
 end
 
 Given /^I want to search for users from "([^"]*)"$/ do |country|
-	filter[:country] = country
+	user_filter[:country] = country
 end
 
 Given /^I want to search for users with reputation higher than (\d+)$/ do |reputation|
-	filter[:min_reputation] = reputation
+	user_filter[:min_reputation] = reputation
 end
 
-When /^I perform search for new user$/ do
-	@users = StackExchange::UserManager.find(filter)
+When /^I perform search for users$/ do
+	@users = StackExchange::UserManager.new(@requestor).find(user_filter)
 end
 
 Then /^Among other I should get the following users:$/ do |id_name_table|
