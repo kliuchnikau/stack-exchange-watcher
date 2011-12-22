@@ -1,3 +1,3 @@
 $: << File.expand_path('../../../lib', __FILE__)
 
-require 'watcher'
+require 'stack_exchange'
