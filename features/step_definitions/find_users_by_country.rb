@@ -3,11 +3,9 @@ def user_filter
 end
 
 Given /^I want to search on "([^"]*)"$/ do |site|
+	host = site =~ /Stack Overflow/ ? 'http://api.stackoverflow.com' : ''
   require 'rubyoverflow'
-  @requestor = Rubyoverflow::Client.config do |options|
-    options.host = 'http://api.stackoverflow.com' if site =~ /Stack Overflow/
-    options.version = '1.1'
-  end
+  @requestor = Rubyoverflow::Client.new({:host => host, :version => '1.1'})
 end
 
 Given /^I want to search for users from "([^"]*)"$/ do |country|

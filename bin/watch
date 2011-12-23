@@ -9,18 +9,10 @@ def get_se_client
   config = YAML.load_file("#{CONFIG_FOLDER}/stack_exchange.yml")
 
   require 'rubyoverflow'
-  requestor = Rubyoverflow::Client.config do |options|
-    options.host = config['host']
-    options.api_key = config['api_key']
-    options.version = config['api_version']
-  end
-  requestor
+  Rubyoverflow::Client.new( {host: config['host'], version: config['api_version'], api_key: config['api_key']})
 end
 
 requestor = get_se_client()
-
-@client = Rubyoverflow::Users.retrieve_all
-@client.users.fetch
 
 um = StackExchange::UserManager.new(requestor)
 
