@@ -4,4 +4,4 @@ gem 'rspec'
 gem 'cucumber'
 gem 'ZenTest'
 
-gem 'rubyoverflow'
+gem "rubyoverflow", "~> 2.0.2.pre1"
