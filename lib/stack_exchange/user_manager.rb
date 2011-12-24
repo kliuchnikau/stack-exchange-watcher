@@ -4,28 +4,30 @@ module StackExchange
       @api = se_api_client
     end
 
-    def all_users
-      result = []
-      page = 1
-      users = get_users(page)
+    def all_users min_reputation = 0
+      filter = {}
 
-      result += users.users
+      page = 1
+      filter[:min] = min_reputation if min_reputation > 0
+      users = get_users(page, filter)
+
+      result = users.users
       total_users = users.total
       while result.count < total_users
         page += 1
-        result += get_users(page).users
+        result += get_users(page, filter).users
       end
       result
     end
 
     def find_from_country country, reputation = 0
-      all_users.select {|u| u.location =~ /#{country}/i }
+      all_users(reputation).select {|u| u.location =~ /#{country}/i }
     end
 
     private
 
-    def get_users(page)
-      @api.users.fetch({:pagesize => 100, :page => page})
+    def get_users(page, filter)
+      @api.users.fetch({:pagesize => 100, :page => page}.merge(filter) )
     end
   end
 end
