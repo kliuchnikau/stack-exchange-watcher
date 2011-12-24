@@ -17,18 +17,14 @@ Given /^I want to search for users with reputation higher than (\d+)$/ do |reput
 end
 
 When /^I perform search for users$/ do
-	@users = StackExchange::UserManager.new(@requestor).find_from_country(@country, @min_reputation)
+	@users = StackExchange::UserManager.new(@requestor).find_from_country(@country, @min_reputation.to_i)
 end
 
 Then /^Among other I should get the following users:$/ do |id_name_table|
-	test_users = id_name_table.hashes
+  test_users = id_name_table.hashes
   test_users.each { |hash|
-    @users.find_all {|u| u.id == hash[:id] }.should have(1).user
+    @users.find_all {|u| u.user_id.to_i == hash[:id].to_i }.should have(1).user
   }
 
-  @users.count.should be > test_users.count
-end
-
-Then /^All these users are sorted from highest reputation to lowest$/ do
-	pending # express the regexp above with the code you wish you had
+  @users.count.should be >= test_users.count
 end
