@@ -4,7 +4,7 @@ module StackExchange
       @api = se_api_client
     end
 
-    def find_from_country country, reputation = 0
+    def all_users
       result = []
       page = 1
       users = get_users(page)
@@ -16,6 +16,10 @@ module StackExchange
         result += get_users(page).users
       end
       result
+    end
+
+    def find_from_country country, reputation = 0
+      all_users()
     end
 
     private

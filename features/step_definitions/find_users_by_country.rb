@@ -23,7 +23,7 @@ end
 Then /^Among other I should get the following users:$/ do |id_name_table|
 	test_users = id_name_table.hashes
   test_users.each { |hash|
-    @users.find_all {|u| u.id == hash[:id] && u.name == hash[:name] }.should have(1).user
+    @users.find_all {|u| u.id == hash[:id] }.should have(1).user
   }
 
   @users.count.should be > test_users.count
