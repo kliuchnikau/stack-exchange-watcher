@@ -19,7 +19,7 @@ module StackExchange
     end
 
     def find_from_country country, reputation = 0
-      all_users()
+      all_users.select {|u| u.location =~ /#{country}/i }
     end
 
     private
