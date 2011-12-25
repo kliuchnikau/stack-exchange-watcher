@@ -17,14 +17,26 @@ Given /^I want to search for users with reputation higher than (\d+)$/ do |reput
 end
 
 When /^I perform search for users$/ do
-	@users = StackExchange::UserManager.new(@requestor).find_from_country(@country, @min_reputation.to_i)
+	users = StackExchange::UserManager.new(@requestor).find_from_country(@country, @min_reputation.to_i)
+  View::Cli::UserManagerView.new(output).show_list(users)
 end
 
-Then /^Among other I should get the following users:$/ do |id_name_table|
+Then /^Among other I should see the following users:$/ do |id_name_table|
+  #test_users = id_name_table.hashes
+  #test_users.each { |hash|
+  #  @users.find_all {|u| u.user_id.to_i == hash[:id].to_i }.should have(1).user
+  #}
+
+  #@users.count.should be >= test_users.count
+
+  output.should have_at_least(test_users.count).messages
+
   test_users = id_name_table.hashes
   test_users.each { |hash|
-    @users.find_all {|u| u.user_id.to_i == hash[:id].to_i }.should have(1).user
+    output.messages.find_all { |msg| msg =~ /Id: #{hash[:id]}, Name: .+, Reputation: \d+/ }.should have(1).message
   }
+end
 
-  @users.count.should be >= test_users.count
+Then /^I should see count of users from "([^"]*)"$/ do |location|
+  output.messages.find {|msg| msg =~ /Found \d+ users from #{location}/}.should have(1).message
 end
