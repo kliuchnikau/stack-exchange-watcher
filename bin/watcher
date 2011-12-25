@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 $LOAD_PATH.unshift File.expand_path('../../lib/', __FILE__)
 require 'stack_exchange'
+require 'view_cli'
 
 CONFIG_FOLDER = File.expand_path('../../config', __FILE__)
-
 def get_se_client
   require 'yaml'
   config = YAML.load_file("#{CONFIG_FOLDER}/stack_exchange.yml")
@@ -15,11 +15,3 @@ end
 requestor = get_se_client()
 
 um = StackExchange::UserManager.new(requestor)
-
-res = requestor.users
-
-res2 = requestor.users.fetch
-
-puts res.inspect
-
-puts res2.inspect
