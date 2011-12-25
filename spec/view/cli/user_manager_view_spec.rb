@@ -7,12 +7,22 @@ module View::Cli
       [OpenStruct.new({"user_id"=>1, "display_name"=>"Alex", "reputation"=>1500}),
       OpenStruct.new({"user_id"=>2, "display_name"=>"John", "reputation"=>230})]
     end
-    subject { UserManagerView.new(output) }
+    subject { UserManagerView.new(output, 'http://www.stackoverflow.com') }
 
     describe '#show_list' do
       context 'when found users' do
-        it 'shows found users count' do
+        it 'prints found users count' do
           output.should_receive(:puts).with("Found 2 users")
+          subject.show_list users
+        end
+
+        it 'prints found users line by line' do
+          output.should_receive(:puts)
+            .with("Id: 1, Name: Alex, Reputation: 1500, Link: http://www.stackoverflow.com/users/1/")
+
+          output.should_receive(:puts)
+            .with("Id: 2, Name: John, Reputation: 230, Link: http://www.stackoverflow.com/users/2/")
+
           subject.show_list users
         end
       end

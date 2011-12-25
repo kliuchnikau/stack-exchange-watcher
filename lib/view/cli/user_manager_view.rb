@@ -1,6 +1,7 @@
 class View::Cli::UserManagerView
-  def initialize output
+  def initialize output, host
     @output = output
+    @host = host
   end
 
   def show_list users
@@ -8,5 +9,9 @@ class View::Cli::UserManagerView
       return @output.puts "No results found"
     end
     @output.puts "Found #{users.count} users"
+
+    users.each do |user|
+      @output.puts "Id: #{user.user_id}, Name: #{user.display_name}, Reputation: #{user.reputation}, Link: #{@host}/users/#{user.user_id}/"
+    end
   end
 end

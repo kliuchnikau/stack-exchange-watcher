@@ -3,9 +3,9 @@ def user_filter
 end
 
 Given /^I want to search on "([^"]*)"$/ do |site|
-	host = site =~ /Stack Overflow/ ? 'http://api.stackoverflow.com' : ''
+	@host = site =~ /Stack Overflow/ ? 'http://api.stackoverflow.com' : ''
   require 'rubyoverflow'
-  @requestor = Rubyoverflow::Client.new({:host => host, :version => '1.1'})
+  @requestor = Rubyoverflow::Client.new({:host => @host, :version => '1.1'})
 end
 
 Given /^I want to search for users from "([^"]*)"$/ do |country|
@@ -18,7 +18,7 @@ end
 
 When /^I perform search for users$/ do
 	users = StackExchange::UserManager.new(@requestor).find_from_country(@country, @min_reputation.to_i)
-  View::Cli::UserManagerView.new(output).show_list(users)
+  View::Cli::UserManagerView.new(output, @host).show_list(users)
 end
 
 Then /^Among other I should see the following users:$/ do |id_name_table|
