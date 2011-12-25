@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'ostruct'
 
 describe StackExchange::UserManager do
   let(:api_requestor) do

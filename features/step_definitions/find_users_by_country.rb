@@ -33,10 +33,10 @@ Then /^Among other I should see the following users:$/ do |id_name_table|
 
   test_users = id_name_table.hashes
   test_users.each { |hash|
-    output.messages.find_all { |msg| msg =~ /Id: #{hash[:id]}, Name: .+, Reputation: \d+/ }.should have(1).message
+    output.messages.find_all { |msg| msg =~ %r%/Id: #{hash[:id]}, Name: .+, Reputation: \d+, Link: http://www.stackoverflow.com/users/\d+/% }.should have(1).message
   }
 end
 
-Then /^I should see count of users from "([^"]*)"$/ do |location|
-  output.messages.find {|msg| msg =~ /Found \d+ users from #{location}/}.should have(1).message
+Then /^I should see count of users$/ do
+  output.messages.find {|msg| msg =~ /^Found \d+ users/}.should have(1).message
 end

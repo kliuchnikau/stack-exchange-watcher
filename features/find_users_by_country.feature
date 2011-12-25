@@ -6,7 +6,7 @@ Feature: Find all stack exchange site user from specified country or city
 		And I want to search for users from "Minsk"
 		And I want to search for users with reputation higher than 40000
 		When I perform search for users
-		Then I should see count of users from "Minsk"
+		Then I should see count of users
     And Among other I should see the following users:
 		 | id | name |
 		 | 137350 | Vladimir |
