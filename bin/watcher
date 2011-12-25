@@ -15,3 +15,5 @@ end
 requestor = get_se_client()
 
 um = StackExchange::UserManager.new(requestor)
+user = um.find_from_country("Minsk", 45000)
+View::Cli::UserManagerView.new.show_list(user)

@@ -1,5 +1,5 @@
 class View::Cli::UserManagerView
-  def initialize output, host
+  def initialize host = 'http://stackoverflow.com', output = STDOUT
     @output = output
     @host = host
   end

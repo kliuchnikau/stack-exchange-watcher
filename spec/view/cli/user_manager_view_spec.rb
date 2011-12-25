@@ -7,7 +7,7 @@ module View::Cli
       [OpenStruct.new({"user_id"=>1, "display_name"=>"Alex", "reputation"=>1500}),
       OpenStruct.new({"user_id"=>2, "display_name"=>"John", "reputation"=>230})]
     end
-    subject { UserManagerView.new(output, 'http://www.stackoverflow.com') }
+    subject { UserManagerView.new('http://www.stackoverflow.com', output) }
 
     describe '#show_list' do
       context 'when found users' do
