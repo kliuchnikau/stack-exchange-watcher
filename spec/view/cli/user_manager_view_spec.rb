@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module View::Cli
   describe UserManagerView do
-    let(:output) { double('output').as_null_object }
+    let(:output) { double('stdout').as_null_object }
     let(:users) do
       [OpenStruct.new({"user_id"=>1, "display_name"=>"Alex", "reputation"=>1500}),
       OpenStruct.new({"user_id"=>2, "display_name"=>"John", "reputation"=>230})]
