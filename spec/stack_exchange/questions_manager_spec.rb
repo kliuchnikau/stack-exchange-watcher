@@ -20,7 +20,14 @@ module StackExchange
     end
 
     describe '#get_new_questions' do
-      it 'should receive '
+      it 'should receive new questions from requestor' do
+        fake_result = OpenStruct.new({'total' => 100500, 'page' => 1, 'pagesize' => 30, 'questions' => Array.new(30) })
+        questions = mock('Questions')
+        requestor.should_receive(:questions).and_return(questions)
+        questions.should_receive(:fetch).with(pagesize: 30, page: 1, sort: 'creation', tagged: 'ruby').and_return(fake_result)  # fromdate: unixtime
+
+        @manager.get_new_questions('ruby')
+      end
     end
   end
 end
