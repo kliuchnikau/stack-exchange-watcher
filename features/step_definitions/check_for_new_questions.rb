@@ -25,7 +25,7 @@ Given /^I have not checked for "([^"]*)" updates in the past$/ do |tag|
 end
 
 When /^I check for new questions$/ do
-  questions_watcher = StackExchange::Questions.new(@requestor)
+  questions_watcher = StackExchange::QuestionsManager.new(@requestor)
   last_tag_check.each { |tag, unixtime| questions_watcher.set_last_tag_check(tag, unixtime) }
   new_questions = questions_watcher.get_new_questions @tag
 

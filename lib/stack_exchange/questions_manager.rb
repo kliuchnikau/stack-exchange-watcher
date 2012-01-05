@@ -1,5 +1,5 @@
 module StackExchange
-  class Questions
+  class QuestionsManager
     def initialize requestor
       @requestor = requestor
       @tag_checks = {}

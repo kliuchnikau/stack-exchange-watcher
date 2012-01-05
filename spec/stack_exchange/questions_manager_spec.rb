@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 module StackExchange
-  describe Questions do
+  describe QuestionsManager do
     let(:requestor) { double('Rubyflow::Client').as_null_object }
-    before(:each) { @manager = StackExchange::Questions.new(requestor) }
+    before(:each) { @manager = StackExchange::QuestionsManager.new(requestor) }
 
     describe '#set_last_tag_check' do
       it 'should set last tag check date' do
