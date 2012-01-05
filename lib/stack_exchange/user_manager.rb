@@ -19,6 +19,8 @@ module StackExchange
         raise 'jumped over total users count' if page > (total_users / PAGE_SIZE)+1
         page += 1
         result += get_users(page, filter).users
+        puts "page #{page}"
+        puts "got users #{result.count}"
       end
       result
     end

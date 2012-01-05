@@ -1,6 +1,5 @@
 Feature: Find all stack exchange site user from specified country or city
 
-  @wip
 	Scenario: Find all users from Minsk on Stack Overflow with reputation higher than 45000
 		Given I want to search on "Stack Overflow"
 		And I want to search for users from "Minsk"
