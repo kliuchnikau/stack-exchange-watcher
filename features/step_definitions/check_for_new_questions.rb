@@ -37,6 +37,6 @@ Then /^I see a message "([^"]*)"$/ do |message|
 end
 
 Then /^I receive descriptions and links to (\d+) latest answers for specified tag$/ do |count|
-  links = output.messages.find_all {|msg| msg =~ %r%Tag: #{tag}, Descr: ".+", Link: http://www.stackoverflow.com/questions/\d+/% }
+  links = output.messages.find_all {|msg| msg =~ %r%\[.*#{@tag}.*\] ".+" \(\d{2}:\d{2}:\d{2}\), http://www.stackoverflow.com/questions/\d+/% }
   links.should have(count).items
 end

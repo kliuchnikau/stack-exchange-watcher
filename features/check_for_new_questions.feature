@@ -11,8 +11,7 @@ Feature: Check for new questions by specified tag
     Given I specified tag "ruby"
     And I have not checked for "ruby" updates in the past
     When I check for new questions
-    Then I see a message "Found 30 new answers"
-    And I receive descriptions and links to 30 latest answers for specified tag
+    Then I receive descriptions and links to 30 latest answers for specified tag
 
   @analyze
   Scenario: Second time for specified tag after small time period

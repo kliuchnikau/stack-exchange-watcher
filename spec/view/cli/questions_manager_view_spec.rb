@@ -14,10 +14,10 @@ describe View::Cli::QuestionsManagerView do
     context 'when there are several questions to show' do
       it 'prints found questions line by line' do
         output.should_receive(:puts)
-          .with("[ruby, rails, google] Title of question 1 (14:16:56), http://www.stackoverflow.com/questions/12345/")
+          .with("[ruby, rails, google] \"Title of question 1\" (14:16:56), http://www.stackoverflow.com/questions/12345/")
 
         output.should_receive(:puts)
-          .with("[ruby, ruby-on-rails] Title of question 2 (15:26:44), http://www.stackoverflow.com/questions/54321/")
+          .with("[ruby, ruby-on-rails] \"Title of question 2\" (15:26:44), http://www.stackoverflow.com/questions/54321/")
 
         subject.show_list questions
       end
