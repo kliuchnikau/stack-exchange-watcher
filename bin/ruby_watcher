@@ -1,3 +1,16 @@
 #!/usr/bin/env ruby
 require_relative 'support/init'
 requestor = get_se_client()
+
+qm = StackExchange::QuestionsManager.new(requestor)
+view = View::Cli::QuestionsManagerView.new
+loop do
+  begin
+    questions = qm.get_new_questions('ruby')
+    puts "\n\n" if questions.length > 0
+    view.show_list(questions)
+    sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
+  rescue Interrupt
+    raise StopIteration
+  end
+end
