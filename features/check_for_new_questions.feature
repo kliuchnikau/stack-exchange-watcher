@@ -6,7 +6,7 @@ Feature: Check for new questions by specified tag
   Background:
     Given I want to search on "Stack Overflow"
 
-  @wip
+  @completed
   Scenario: First time for specified tag
     Given I specified tag "ruby"
     And I have not checked for "ruby" updates in the past

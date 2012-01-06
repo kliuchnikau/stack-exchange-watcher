@@ -1,4 +1,4 @@
-class Output
+class OutputSpy
   def messages
 	  @messages ||= []
   end
@@ -9,5 +9,5 @@ class Output
 end
 
 def output
-  @output ||= Output.new
+  @output ||= OutputSpy.new
 end

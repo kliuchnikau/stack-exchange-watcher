@@ -1,2 +1,3 @@
+regression: '--tags @completed'
 wip: '--tags @wip --tags ~@paused'
 default: '--profile wip'
