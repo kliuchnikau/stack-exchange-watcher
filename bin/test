@@ -1,27 +1,15 @@
 #!/usr/bin/env ruby
-$LOAD_PATH.unshift File.expand_path('../../lib/', __FILE__)
-require 'stack_exchange'
-require 'view_cli'
-
-CONFIG_FOLDER = File.expand_path('../../config', __FILE__)
-def get_se_client
-  require 'yaml'
-  config = YAML.load_file("#{CONFIG_FOLDER}/stack_exchange.yml")
-
-  require 'rubyoverflow'
-  Rubyoverflow::Client.new( {host: config['host'], version: config['api_version'], api_key: config['api_key']})
-end
-
+require_relative 'support/init'
 requestor = get_se_client()
 
-um = StackExchange::UserManager.new(requestor)
-user = um.find_from_country("Minsk", 1000)   # WARNING: Expected execution time - 1 hour
-View::Cli::UserManagerView.new.show_list(user)
+qm = StackExchange::QuestionsManager.new(requestor)
+questions = qm.get_new_questions('ruby')
+View::Cli::QuestionsManagerView.new.show_list(questions)
 
 =begin
 
 um = StackExchange::UserManager.new(requestor)
-user = um.find_from_country("Minsk", 1000)
+user = um.find_from_country("Minsk", 1000)  # WARNING: Expected execution time - 1 hour
 View::Cli::UserManagerView.new.show_list(user)
 
 As of December, 25 2011
@@ -51,3 +39,5 @@ Id: 29300, Name: Valera Kolupaev, Reputation: 1062, Link: http://stackoverflow.c
 Id: 470005, Name: lazyberezovsky, Reputation: 1039, Link: http://stackoverflow.com/users/470005/
 Id: 324117, Name: andr, Reputation: 1025, Link: http://stackoverflow.com/users/324117/
 Id: 607959, Name: Alexander Yezutov, Reputation: 1015, Link: http://stackoverflow.com/users/607959/
+
+=end

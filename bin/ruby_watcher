@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require_relative 'support/init'
+requestor = get_se_client()
