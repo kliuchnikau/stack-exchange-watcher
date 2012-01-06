@@ -10,7 +10,7 @@ class View::Cli::QuestionsManagerView
       tags = qst.tags.join(', ')
       creation_date = Time.at(qst.creation_date).strftime('%H:%M:%S')
       link = "#{@host}/questions/#{qst.question_id}/"
-      @output.puts("[#{tags}] \"#{qst.title}\" (#{creation_date}), #{link}")
+      @output.puts("#{link} \"#{qst.title}\" [#{tags}] (#{creation_date})")
     end
   end
 end
