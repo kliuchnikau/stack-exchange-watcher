@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+require_relative 'support/init'
+requestor = get_se_client()
+
+require 'blather/client'
+daemon_id = 'so-watcher@jabber.org'
+daemon_pass = 'Qwe123!'
+client_id = 'aliaksei.kliuchnikau@active.by'
+daemon = Blather::Client.setup(daemon_id, daemon_pass)
+
+qm = StackExchange::QuestionsManager.new(requestor)
+view = View::Xmpp::QuestionsManagerView.new(daemon, client_id)
+loop do
+	begin
+		questions = qm.get_new_questions('ruby')
+		view.show_list(questions)
+		sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
+	rescue Interrupt
+		raise StopIteration
+	end
+end
+
+daemon.shutdown
