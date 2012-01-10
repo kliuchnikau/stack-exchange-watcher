@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/kliuchnikau/stack-exchange-watcher.png)](http://travis-ci.org/kliuchnikau/stack-exchange-watcher)
+{<img src="https://secure.travis-ci.org/kliuchnikau/stack-exchange-watcher.png" />}[http://travis-ci.org/kliuchnikau/stack-exchange-watcher]
 
 Daemon to watch for new questions on stack exchange sites. Watch for questions tagged with tags from my preferences on stack exchange sites of for tags specified in the daemon preferences. Daemon should notify me in Kubuntu, Android 2.3.4+ and possibly via Jabber.
 
