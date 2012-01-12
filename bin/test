@@ -1,12 +1,53 @@
 #!/usr/bin/env ruby
 require_relative 'support/init'
+require_relative 'support/init_se'
 requestor = get_se_client()
 
-qm = StackExchange::QuestionsManager.new(requestor)
-questions = qm.get_new_questions('ruby')
-View::Cli::QuestionsManagerView.new.show_list(questions)
+require 'blather/client'
+
+setup 'so-watcher@jabber.org', 'password'
+
+fork do
+	when_ready {
+		say 'aliaksei.kliuchnikau@active.by', 'hi2' +"\n" +'hi2_2'
+	}
+end
+
+sleep 61
+
+fork do
+	when_ready {
+		say 'aliaksei.kliuchnikau@active.by', 'hi3'
+	}
+end
 
 =begin
+
+require 'blather/client'
+
+setup 'so-watcher@jabber.org', 'password!'
+
+fork do
+	when_ready {
+		say 'aliaksei.kliuchnikau@active.by', 'hi2'
+	}
+end
+
+sleep 5
+
+fork do
+	when_ready {
+		say 'aliaksei.kliuchnikau@active.by', 'hi3'
+	}
+end
+
+------------
+
+#qm = StackExchange::QuestionsManager.new(requestor)
+#questions = qm.get_new_questions('ruby')
+#View::Cli::QuestionsManagerView.new.show_list(questions)
+
+------------
 
 um = StackExchange::UserManager.new(requestor)
 user = um.find_from_country("Minsk", 1000)  # WARNING: Expected execution time - 1 hour
