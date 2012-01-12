@@ -4,15 +4,13 @@ require_relative 'support/init_se'
 requestor = get_se_client()
 
 require_relative 'support/init_xmpp'
-get_xmpp_daemon()
+setup_blatter_xmpp_dsl()
 client_id = get_xmpp_client_id()
 
 qm = StackExchange::QuestionsManager.new(requestor)
 loop do
 	begin
-		puts 'receiving questions'
 		questions = qm.get_new_questions('ruby')
-		puts 'got questions'
 		message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
 		fork do
 			when_ready { say client_id, message }
