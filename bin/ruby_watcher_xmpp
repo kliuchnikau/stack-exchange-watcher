@@ -12,10 +12,16 @@ loop do
 	begin
 		questions = qm.get_new_questions('ruby')
 		message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
-		fork do
+		pid = fork do
 			when_ready { say client_id, message }
+			#Signal.trap("Hang") { exit }
 		end
+		# TODO: try to use EventMachine::add_periodic_timer(5) { ... }
+		# or try to use 'rufus-scheduler' gem instead of sleep
+		# This gem is EM based itself and will help to get rid of EM-hanging forks
 		sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
+		#Process.kill("Hang", pid)
+		#Process.detach(pid)
 	rescue Interrupt
 		raise StopIteration
 	end
