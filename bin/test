@@ -1,26 +1,39 @@
 #!/usr/bin/env ruby
 require_relative 'support/init'
 require_relative 'support/init_se'
+require 'eventmachine'
 requestor = get_se_client()
 
-require 'blather/client'
 
-setup 'so-watcher@jabber.org', 'password'
 
-fork do
-	when_ready {
-		say 'aliaksei.kliuchnikau@active.by', 'hi2' +"\n" +'hi2_2'
-	}
+
+
+#when_ready {
+#	say 'aliaksei.kliuchnikau@active.by', 'hi2' +"\n" +'hi2_2'
+#}
+
+loop do
+  pid = fork do
+    require 'blather/client'
+    setup 'so-watcher@jabber.org', 'Qwe123!'
+    when_ready {
+      say 'aliaksei.kliuchnikau@active.by', 'hi3'
+      shutdown
+    }
+    Signal.trap("HUP") { exit }
+  end
+
+  sleep(5)
+
+  Process.kill("HUP", pid)
+  #Process.wait
 end
 
-sleep 61
-
-fork do
-	when_ready {
-		say 'aliaksei.kliuchnikau@active.by', 'hi3'
-	}
-end
-
+#EM.run do
+#  EM.add_periodic_timer(5) do
+#    puts 'here'
+#  end
+#end
 =begin
 
 require 'blather/client'

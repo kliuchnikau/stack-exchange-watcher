@@ -4,27 +4,33 @@ require_relative 'support/init_se'
 requestor = get_se_client()
 
 require_relative 'support/init_xmpp'
-setup_blatter_xmpp_dsl()
 client_id = get_xmpp_client_id()
 
 qm = StackExchange::QuestionsManager.new(requestor)
+
+def send_msg_in_fork(client_id, message)
+  pid = fork do
+    setup_blatter_xmpp_dsl()
+    when_ready { say client_id, message; shutdown }
+    Signal.trap("HUP") { exit }
+  end
+  pid
+end
+
 loop do
 	begin
 		questions = qm.get_new_questions('ruby')
-		message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
-		pid = fork do
-			when_ready { say client_id, message }
-			#Signal.trap("Hang") { exit }
-		end
-		# TODO: try to use EventMachine::add_periodic_timer(5) { ... }
-		# or try to use 'rufus-scheduler' gem instead of sleep
-		# This gem is EM based itself and will help to get rid of EM-hanging forks
-		sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
-		#Process.kill("Hang", pid)
-		#Process.detach(pid)
-	rescue Interrupt
+    message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
+    begin
+      pid = send_msg_in_fork(client_id, message) if questions.count > 0
+      sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
+		ensure
+      if pid
+        Process.kill("HUP", pid)
+        Process.wait
+      end
+    end
+  rescue Interrupt
 		raise StopIteration
 	end
 end
-
-shutdown
