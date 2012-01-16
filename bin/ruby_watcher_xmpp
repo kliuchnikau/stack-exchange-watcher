@@ -17,20 +17,34 @@ def send_msg_in_fork(client_id, message)
   pid
 end
 
+def try_send_msg_and_wait(client_id, message)
+	begin
+		pid = send_msg_in_fork(client_id, message) if message.length > 0
+		sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
+	ensure
+		if pid
+			Process.kill("HUP", pid)
+			Process.wait
+		end
+	end
+end
+
+timeout_count = 0
 loop do
 	begin
 		questions = qm.get_new_questions('ruby')
     message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
-    begin
-      pid = send_msg_in_fork(client_id, message) if questions.count > 0
-      sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
-		ensure
-      if pid
-        Process.kill("HUP", pid)
-        Process.wait
-      end
-    end
+		try_send_msg_and_wait(client_id, message)
+	rescue TimeoutError
+		timeout_count += 1
+		if timeout_count == 10
+			try_send_msg_and_wait(client_id, 'Failed with TimeoutError')
+			raise
+		end
   rescue Interrupt
 		raise StopIteration
+	rescue Exception => e
+		try_send_msg_and_wait(client_id, "#{e.class} - #{e.message}\n#{e.backtrace.join("\n")}")
+		raise
 	end
 end
