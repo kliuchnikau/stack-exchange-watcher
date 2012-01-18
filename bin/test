@@ -4,9 +4,58 @@ require_relative 'support/init_se'
 require 'eventmachine'
 requestor = get_se_client()
 
+um = StackExchange::UserManager.new(requestor)
+user = um.find_from_country("Belarus", 1000)  # WARNING: Expected execution time - 1 hour
+View::Cli::UserManagerView.new.show_list(user)
 
+=begin
 
+um = StackExchange::UserManager.new(requestor)
+user = um.find_from_country("Belarus", 1000)  # WARNING: Expected execution time - 1 hour
+View::Cli::UserManagerView.new.show_list(user)
 
+As of January, 18 2012
+Found 38 users from Belarus
+Id: 137350, Name: Vladimir, Reputation: 49060, Link: http://stackoverflow.com/users/137350/
+Id: 244297, Name: eugene y, Reputation: 25319, Link: http://stackoverflow.com/users/244297/
+Id: 508601, Name: Andrew Orsich, Reputation: 10346, Link: http://stackoverflow.com/users/508601/
+Id: 354067, Name: Vasil Remeniuk, Reputation: 8978, Link: http://stackoverflow.com/users/354067/
+Id: 301607, Name: StanislavL, Reputation: 8930, Link: http://stackoverflow.com/users/301607/
+Id: 119224, Name: queen3, Reputation: 6580, Link: http://stackoverflow.com/users/119224/
+Id: 125805, Name: neutrino, Reputation: 5810, Link: http://stackoverflow.com/users/125805/
+Id: 336626, Name: nash, Reputation: 5109, Link: http://stackoverflow.com/users/336626/
+Id: 186710, Name: Li0liQ, Reputation: 4269, Link: http://stackoverflow.com/users/186710/
+Id: 781150, Name: Artsiom Rudzenka, Reputation: 3925, Link: http://stackoverflow.com/users/781150/
+Id: 357743, Name: KL-7, Reputation: 3476, Link: http://stackoverflow.com/users/357743/
+Id: 895121, Name: Andrej L, Reputation: 2719, Link: http://stackoverflow.com/users/895121/
+Id: 592882, Name: Timofei Davydik, Reputation: 2664, Link: http://stackoverflow.com/users/592882/
+Id: 575421, Name: Nikita Beloglazov, Reputation: 2437, Link: http://stackoverflow.com/users/575421/
+Id: 355130, Name: NR4TR, Reputation: 2347, Link: http://stackoverflow.com/users/355130/
+Id: 544505, Name: Andrei Andrushkevich, Reputation: 2301, Link: http://stackoverflow.com/users/544505/
+Id: 377133, Name: DotNET Ninja, Reputation: 2153, Link: http://stackoverflow.com/users/377133/
+Id: 298088, Name: Nagg, Reputation: 2101, Link: http://stackoverflow.com/users/298088/
+Id: 496265, Name: alpha-mouse, Reputation: 1979, Link: http://stackoverflow.com/users/496265/
+Id: 219931, Name: Dziamid, Reputation: 1918, Link: http://stackoverflow.com/users/219931/
+Id: 158689, Name: Alex Kliuchnikau, Reputation: 1910, Link: http://stackoverflow.com/users/158689/
+Id: 55350, Name: Andrei K., Reputation: 1904, Link: http://stackoverflow.com/users/55350/
+Id: 242325, Name: fantactuka, Reputation: 1569, Link: http://stackoverflow.com/users/242325/
+Id: 318502, Name: Andrei, Reputation: 1568, Link: http://stackoverflow.com/users/318502/
+Id: 492865, Name: Yuras, Reputation: 1535, Link: http://stackoverflow.com/users/492865/
+Id: 108533, Name: Guard, Reputation: 1491, Link: http://stackoverflow.com/users/108533/
+Id: 578, Name: axk, Reputation: 1472, Link: http://stackoverflow.com/users/578/
+Id: 542659, Name: woodshy, Reputation: 1423, Link: http://stackoverflow.com/users/542659/
+Id: 949476, Name: dfsq, Reputation: 1383, Link: http://stackoverflow.com/users/949476/
+Id: 331488, Name: Michael Sagalovich, Reputation: 1382, Link: http://stackoverflow.com/users/331488/
+Id: 126529, Name: Alexey, Reputation: 1209, Link: http://stackoverflow.com/users/126529/
+Id: 172159, Name: OneOfThem, Reputation: 1196, Link: http://stackoverflow.com/users/172159/
+Id: 854386, Name: Andrey, Reputation: 1142, Link: http://stackoverflow.com/users/854386/
+Id: 244026, Name: Victor, Reputation: 1134, Link: http://stackoverflow.com/users/244026/
+Id: 607959, Name: Alexander Yezutov, Reputation: 1100, Link: http://stackoverflow.com/users/607959/
+Id: 470005, Name: lazyberezovsky, Reputation: 1074, Link: http://stackoverflow.com/users/470005/
+Id: 29300, Name: Valera Kolupaev, Reputation: 1062, Link: http://stackoverflow.com/users/29300/
+Id: 324117, Name: andr, Reputation: 1025, Link: http://stackoverflow.com/users/324117/
+
+--------
 
 #when_ready {
 #	say 'aliaksei.kliuchnikau@active.by', 'hi2' +"\n" +'hi2_2'
@@ -34,7 +83,8 @@ end
 #    puts 'here'
 #  end
 #end
-=begin
+
+-----------
 
 require 'blather/client'
 
@@ -67,7 +117,7 @@ user = um.find_from_country("Minsk", 1000)  # WARNING: Expected execution time -
 View::Cli::UserManagerView.new.show_list(user)
 
 As of December, 25 2011
-Found 25 users
+Found 25 users from Minsk
 Id: 137350, Name: Vladimir, Reputation: 47870, Link: http://stackoverflow.com/users/137350/
 Id: 244297, Name: eugene y, Reputation: 24897, Link: http://stackoverflow.com/users/244297/
 Id: 354067, Name: Vasil Remeniuk, Reputation: 8863, Link: http://stackoverflow.com/users/354067/
