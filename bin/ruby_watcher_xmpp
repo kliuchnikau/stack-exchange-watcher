@@ -1,17 +1,35 @@
 #!/usr/bin/env ruby
 require_relative 'support/init'
 require_relative 'support/init_se'
-requestor = get_se_client()
-
 require_relative 'support/init_xmpp'
-client_id = get_xmpp_client_id()
 
-qm = StackExchange::QuestionsManager.new(requestor)
+def handle_blather_connection_failure message
+	attempts = 0
+	begin
+		yield
+	rescue Blather::Stream::ConnectionFailed
+		attempts += 1
+		if attempts < 5
+			sleep(5)
+			retry
+		else
+			shutdown rescue nil
+			abort("XMPP CONNECTION FAILED: Cannot deliver message #{message}")
+		end
+	end
+end
 
 def send_msg_in_fork(client_id, message)
   pid = fork do
-    setup_blatter_xmpp_dsl()
-    when_ready { say client_id, message; shutdown }
+		handle_blather_connection_failure(message) do
+			setup_blatter_xmpp_dsl()
+			when_ready do
+				handle_blather_connection_failure(message) do
+					say client_id, message
+					shutdown
+				end
+			end
+		end
     Signal.trap("HUP") { exit }
   end
   pid
@@ -28,6 +46,11 @@ def try_send_msg_and_wait(client_id, message)
 		end
 	end
 end
+
+client_id = get_xmpp_client_id()
+
+requestor = get_se_client()
+qm = StackExchange::QuestionsManager.new(requestor)
 
 timeout_count = 0
 loop do
