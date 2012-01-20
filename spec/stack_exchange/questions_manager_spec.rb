@@ -3,7 +3,10 @@ require 'spec_helper'
 module StackExchange
   describe QuestionsManager do
     let(:requestor) { double('Rubyflow::Client').as_null_object }
-    let(:manager) { StackExchange::QuestionsManager.new(requestor) }
+		let(:current_time) { Time.new(2012, 1, 1).to_i }
+    let(:manager) do
+		  StackExchange::QuestionsManager.new(requestor).tap { |manager| manager.stub!(:current_time).and_return(current_time) }
+		end
 
     describe '#set_last_tag_check' do
       it 'should set last tag check date' do
@@ -30,7 +33,7 @@ module StackExchange
       end
 
       it 'should receive new questions from requestor' do
-        questions_received = expect_requestor_call({:pagesize => 30, :page => 1, :sort => 'creation', :tagged => 'ruby' })
+        questions_received = expect_requestor_call({:pagesize => 30, :page => 1, :sort => 'creation', :tagged => 'ruby', :todate => current_time })
 
         result = manager.get_new_questions('ruby')
 
@@ -38,16 +41,16 @@ module StackExchange
       end
 
       it 'should set last tag check time after query for the tag' do
-        expect_requestor_call({:pagesize => 30, :page => 1, :sort => 'creation', :tagged => 'ruby' })
+        expect_requestor_call({:pagesize => 30, :page => 1, :sort => 'creation', :tagged => 'ruby', :todate => current_time })
 
         manager.should_receive(:set_last_tag_check).with('ruby', kind_of(Numeric))
         manager.get_new_questions('ruby')
       end
 
       it 'should receive new questions from the last tag check time only' do
-        unixtime = Time.now.to_i
-        manager.set_last_tag_check('ruby', unixtime)
-        expect_requestor_call({:pagesize => 30, :page => 1, :sort => 'creation', :tagged => 'ruby', :fromdate => unixtime})
+        prev_req_time = Time.now.to_i
+        manager.set_last_tag_check('ruby', prev_req_time)
+        expect_requestor_call({:pagesize => 30, :page => 1, :sort => 'creation', :tagged => 'ruby', :fromdate => prev_req_time, :todate => current_time})
 
         manager.get_new_questions('ruby')
       end

@@ -6,9 +6,9 @@ module StackExchange
     end
 
     def get_new_questions tag
-      query_params = prepare_query_params(tag)
+			request_unixtime = current_time
+			query_params = prepare_query_params(tag, request_unixtime)
 
-      request_unixtime = Time.now.to_i
       result_page = @requestor.questions.fetch(query_params)
       set_last_tag_check(tag, request_unixtime)
 
@@ -21,14 +21,19 @@ module StackExchange
 
     def get_last_tag_check tag
       @tag_checks[tag]
-    end
+		end
 
-    private
+		private
 
-    def prepare_query_params(tag)
+		def current_time
+			Time.now.to_i
+		end
+
+    def prepare_query_params(tag, request_time)
       last_tag_check = get_last_tag_check tag
       query_params = {:pagesize => 30, :page => 1, :sort => 'creation', :tagged => tag}
       query_params[:fromdate] = last_tag_check if last_tag_check
+			query_params[:todate] = request_time
       query_params
     end
   end
