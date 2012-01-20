@@ -3,71 +3,102 @@ require_relative 'support/init'
 require_relative 'support/init_se'
 require_relative 'support/init_xmpp'
 
-def handle_blather_connection_failure message
-	attempts = 0
-	begin
-		yield
-	rescue Blather::Stream::ConnectionFailed
-		attempts += 1
-		if attempts < 5
-			sleep(5)
-			retry
-		else
-			shutdown rescue nil
-			abort("XMPP CONNECTION FAILED: Cannot deliver message #{message}")
-		end
-	end
-end
+module Xmpp
+  class QuestionsManager
+    require 'blather/client/client'
+    require 'blather/client/dsl'
+    include Blather::DSL
 
-def send_msg_in_fork(client_id, message)
-  pid = fork do
-		handle_blather_connection_failure(message) do
-			setup_blatter_xmpp_dsl()
-			when_ready do
-				handle_blather_connection_failure(message) do
-					say client_id, message
-					shutdown
-				end
-			end
-		end
-    Signal.trap("HUP") { exit }
+    #Blather.logger.level = Logger::DEBUG
+
+    def initialize client_id
+      @client_id = client_id
+    end
+
+    def try_send_msg_and_wait(message)
+      begin
+        pid = send_msg_in_fork(@client_id, message) if message.length > 0
+        sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
+      ensure
+        if pid
+          Process.kill("HUP", pid)
+          Process.wait
+        end
+      end
+    end
+
+    private
+
+    def handle_blather_connection_failure message
+      attempts = 0
+      begin
+        yield
+      rescue Blather::Stream::ConnectionFailed
+        attempts += 1
+        if attempts < 5
+          sleep(5)
+          retry
+        else
+          shutdown rescue nil
+          abort("XMPP CONNECTION FAILED: Cannot deliver message #{message}")
+        end
+      end
+    end
+
+    def send_msg_in_fork(client_id, message)
+      pid = fork do
+        handle_blather_connection_failure(message) do
+          setup *blather_daemon_credentials()
+
+          when_ready do
+            handle_blather_connection_failure(message) do
+              say client_id, message
+              shutdown
+            end
+          end
+
+          EM.run { client.run }
+        end
+        Signal.trap("HUP") { exit }
+      end
+      pid
+    end
   end
-  pid
 end
 
-def try_send_msg_and_wait(client_id, message)
-	begin
-		pid = send_msg_in_fork(client_id, message) if message.length > 0
-		sleep(61) # if I make the same query more often than once per minute then it is considered abusive on api level
-	ensure
-		if pid
-			Process.kill("HUP", pid)
-			Process.wait
-		end
-	end
+class QuestionsWatcher
+  def initialize requestor, view
+    @qm = StackExchange::QuestionsManager.new(requestor)
+    @view = view
+  end
+
+  def watch_tags
+    timeout_count = 0
+    loop do
+      begin
+        questions = @qm.get_new_questions('ruby') # TODO: write tests and extend this class to monitor several different tags and several sites
+        message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
+        @view.try_send_msg_and_wait(message)
+      rescue TimeoutError
+        timeout_count += 1
+        if timeout_count == 10
+          @view.try_send_msg_and_wait('Failed with TimeoutError')
+          raise
+        end
+      rescue Interrupt
+        raise StopIteration
+      rescue Exception => e
+        @view.try_send_msg_and_wait("#{e.class} - #{e.message}\n#{e.backtrace.join("\n")}")
+        raise
+      end
+    end
+  end
 end
 
 client_id = get_xmpp_client_id()
+view = Xmpp::QuestionsManager.new client_id
 
 requestor = get_se_client()
-qm = StackExchange::QuestionsManager.new(requestor)
+watcher = QuestionsWatcher.new requestor, view
 
-timeout_count = 0
-loop do
-	begin
-		questions = qm.get_new_questions('ruby') # TODO: write tests and extend this class to monitor several different tags and several sites
-    message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
-		try_send_msg_and_wait(client_id, message)
-	rescue TimeoutError
-		timeout_count += 1
-		if timeout_count == 10
-			try_send_msg_and_wait(client_id, 'Failed with TimeoutError')
-			raise
-		end
-  rescue Interrupt
-		raise StopIteration
-	rescue Exception => e
-		try_send_msg_and_wait(client_id, "#{e.class} - #{e.message}\n#{e.backtrace.join("\n")}")
-		raise
-	end
-end
+watcher.watch_tags
