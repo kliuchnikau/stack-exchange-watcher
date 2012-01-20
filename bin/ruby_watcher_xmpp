@@ -55,7 +55,7 @@ qm = StackExchange::QuestionsManager.new(requestor)
 timeout_count = 0
 loop do
 	begin
-		questions = qm.get_new_questions('ruby')
+		questions = qm.get_new_questions('ruby') # TODO: write tests and extend this class to monitor several different tags and several sites
     message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
 		try_send_msg_and_wait(client_id, message)
 	rescue TimeoutError
