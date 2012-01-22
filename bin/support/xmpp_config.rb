@@ -7,6 +7,6 @@ def blather_daemon_credentials
   [daemon_id, daemon_pass]
 end
 
-def get_xmpp_client_id
+def xmpp_client_id
 	YAML.load_file("#{CONFIG_FOLDER}/jabber.yml")['client_jabber_id']
 end
