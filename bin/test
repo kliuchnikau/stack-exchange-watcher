@@ -10,6 +10,52 @@ View::Cli::UserManagerView.new.show_list(user)
 
 =begin
 
+As of January, 30 2012
+page 231
+got users 23095
+Found 40 users from Belarus:
+Id: 137350, Name: Vladimir, Reputation: 49833, Link: http://stackoverflow.com/users/137350/
+Id: 244297, Name: eugene y, Reputation: 25577, Link: http://stackoverflow.com/users/244297/
+Id: 508601, Name: Andrew Orsich, Reputation: 10596, Link: http://stackoverflow.com/users/508601/
+Id: 301607, Name: StanislavL, Reputation: 9523, Link: http://stackoverflow.com/users/301607/
+Id: 354067, Name: Vasil Remeniuk, Reputation: 8998, Link: http://stackoverflow.com/users/354067/
+Id: 119224, Name: queen3, Reputation: 6525, Link: http://stackoverflow.com/users/119224/
+Id: 125805, Name: neutrino, Reputation: 5895, Link: http://stackoverflow.com/users/125805/
+Id: 336626, Name: nash, Reputation: 5149, Link: http://stackoverflow.com/users/336626/
+Id: 186710, Name: Li0liQ, Reputation: 4709, Link: http://stackoverflow.com/users/186710/
+Id: 357743, Name: KL-7, Reputation: 4111, Link: http://stackoverflow.com/users/357743/
+Id: 781150, Name: Artsiom Rudzenka, Reputation: 3935, Link: http://stackoverflow.com/users/781150/
+Id: 592882, Name: Timofei Davydik, Reputation: 2874, Link: http://stackoverflow.com/users/592882/
+Id: 158689, Name: Alex Kliuchnikau, Reputation: 2731, Link: http://stackoverflow.com/users/158689/
+Id: 895121, Name: Andrej L, Reputation: 2719, Link: http://stackoverflow.com/users/895121/
+Id: 949476, Name: dfsq, Reputation: 2707, Link: http://stackoverflow.com/users/949476/
+Id: 575421, Name: Nikita Beloglazov, Reputation: 2457, Link: http://stackoverflow.com/users/575421/
+Id: 355130, Name: NR4TR, Reputation: 2372, Link: http://stackoverflow.com/users/355130/
+Id: 544505, Name: Andrei Andrushkevich, Reputation: 2351, Link: http://stackoverflow.com/users/544505/
+Id: 377133, Name: DotNET Ninja, Reputation: 2159, Link: http://stackoverflow.com/users/377133/
+Id: 298088, Name: Nagg, Reputation: 2101, Link: http://stackoverflow.com/users/298088/
+Id: 496265, Name: alpha-mouse, Reputation: 1981, Link: http://stackoverflow.com/users/496265/
+Id: 219931, Name: Dziamid, Reputation: 1924, Link: http://stackoverflow.com/users/219931/
+Id: 55350, Name: Andrei K., Reputation: 1914, Link: http://stackoverflow.com/users/55350/
+Id: 492865, Name: Yuras, Reputation: 1637, Link: http://stackoverflow.com/users/492865/
+Id: 318502, Name: Andrei, Reputation: 1578, Link: http://stackoverflow.com/users/318502/
+Id: 242325, Name: fantactuka, Reputation: 1574, Link: http://stackoverflow.com/users/242325/
+Id: 108533, Name: Guard, Reputation: 1491, Link: http://stackoverflow.com/users/108533/
+Id: 578, Name: axk, Reputation: 1487, Link: http://stackoverflow.com/users/578/
+Id: 542659, Name: woodshy, Reputation: 1463, Link: http://stackoverflow.com/users/542659/
+Id: 331488, Name: Michael Sagalovich, Reputation: 1382, Link: http://stackoverflow.com/users/331488/
+Id: 126529, Name: Alexey, Reputation: 1243, Link: http://stackoverflow.com/users/126529/
+Id: 172159, Name: OneOfThem, Reputation: 1236, Link: http://stackoverflow.com/users/172159/
+Id: 854386, Name: Andrey, Reputation: 1152, Link: http://stackoverflow.com/users/854386/
+Id: 244026, Name: Victor, Reputation: 1144, Link: http://stackoverflow.com/users/244026/
+Id: 273699, Name: DNNX, Reputation: 1131, Link: http://stackoverflow.com/users/273699/
+Id: 607959, Name: Alexander Yezutov, Reputation: 1130, Link: http://stackoverflow.com/users/607959/
+Id: 470005, Name: lazyberezovsky, Reputation: 1089, Link: http://stackoverflow.com/users/470005/
+Id: 29300, Name: Valera Kolupaev, Reputation: 1072, Link: http://stackoverflow.com/users/29300/
+Id: 324117, Name: andr, Reputation: 1025, Link: http://stackoverflow.com/users/324117/
+Id: 698718, Name: Mark Guk, Reputation: 1016, Link: http://stackoverflow.com/users/698718/
+
+
 um = StackExchange::UserManager.new(requestor)
 user = um.find_from_country("Belarus", 1000)  # WARNING: Expected execution time - 1 hour
 View::Cli::UserManagerView.new.show_list(user)
