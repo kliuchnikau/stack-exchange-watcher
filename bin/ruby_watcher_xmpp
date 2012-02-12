@@ -12,4 +12,4 @@ view = View::Xmpp::QuestionsManagerView.new xmpp_client_id, *blather_daemon_cred
 
 watcher = Watcher::QuestionsWatcher.new get_se_client(), view, logger
 
-watcher.watch_tags # 'ruby' as a parameter
+watcher.watch_tags 'ruby'
