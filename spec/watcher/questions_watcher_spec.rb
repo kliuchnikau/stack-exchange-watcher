@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Watcher::QuestionsWatcher do
-  describe '#watch_tags' do
+  describe '#check_tag' do
     let(:qm) do
       double('StackExchange::QuestrionsManager').as_null_object
     end
@@ -10,8 +10,22 @@ describe Watcher::QuestionsWatcher do
       double('View::Xmpp::QuestrionsManagerView').as_null_object
     end
 
-    #before(:each) do
-    #  requestor.should_receive(:questions).and_return(questions)
-    #end
+    let(:subject) do
+      Watcher::QuestionsWatcher.new(qm, view)
+    end
+
+    context 'when connection with api.stackexchange and jabber is fine' do
+      it 'should send message to view' do
+        creation_date = Time.new(2012, 2, 12, 19, 52, 35)
+        questions = [OpenStruct.new(:tags => ['ruby', 'ruby-on-rails'], :creation_date => creation_date.to_i,
+                     :question_id => 123, :title => 'Question 1')]
+
+        qm.should_receive(:get_new_questions).with('ruby').and_return(questions)
+        expected_msg = "\nhttp://www.stackoverflow.com/questions/123/ \"Question 1\" [ruby, ruby-on-rails] (19:52:35)"
+        view.should_receive(:send_msg_and_wait).with(expected_msg, 61)
+
+        subject.check_tag('ruby')
+      end
+    end
   end
 end

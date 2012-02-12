@@ -10,10 +10,10 @@ class View::Xmpp::Messenger
     @daemon_pass = daemon_pass
   end
 
-  def send_msg_and_do(message, &work)
+  def send_msg_and_wait(message, sec)
     begin
       pid = send_msg_in_fork(@client_id, message) if message.length > 0
-      yield
+      sleep sec # TODO: requiers reengineering, not the best approach
     ensure
       if pid
         Process.kill("HUP", pid)
