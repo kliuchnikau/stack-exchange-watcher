@@ -3,120 +3,13 @@ require_relative 'support/init'
 require_relative 'support/init_se'
 require_relative 'support/xmpp_config'
 require 'logger'
-require 'blather/client/client'
-require 'blather/client/dsl'
-
-module Xmpp
-  class QuestionsManager
-    include Blather::DSL
-
-    def initialize client_id, daemon_id, daemon_pass
-      @client_id = client_id
-      @daemon_id = daemon_id
-      @daemon_pass = daemon_pass
-    end
-
-    def send_msg_and_do(message, &work)
-      begin
-        pid = send_msg_in_fork(@client_id, message) if message.length > 0
-        yield
-      ensure
-        if pid
-          Process.kill("HUP", pid)
-          Process.wait
-        end
-      end
-    end
-
-    private
-
-    def handle_blather_connection_failure message
-      attempts = 0
-      begin
-        yield
-      rescue Blather::Stream::ConnectionFailed
-        attempts += 1
-        if attempts < 5
-          sleep(5)
-          retry
-        else
-          shutdown rescue nil
-          abort("XMPP CONNECTION FAILED: Cannot deliver message #{message}")
-        end
-      end
-    end
-
-    def send_msg_in_fork(client_id, message)
-      pid = fork do
-        handle_blather_connection_failure(message) do
-          setup @daemon_id, @daemon_pass
-
-          when_ready do
-            handle_blather_connection_failure(message) do
-              say client_id, message
-              shutdown
-            end
-          end
-
-          EM.run { client.run }
-        end
-        Signal.trap("HUP") { exit }
-      end
-      pid
-    end
-  end
-end
-
-# TODO: write tests and extend this class to monitor several different tags and several sites
-class QuestionsWatcher
-  def initialize requestor, view, logger = nil
-    @qm = StackExchange::QuestionsManager.new(requestor, logger)
-    @view = view
-    @logger = logger
-  end
-
-  def watch_tags
-    timeout_count = 0
-    loop do
-      begin
-        tag = 'ruby'
-        questions = @qm.get_new_questions(tag).tap {|q| log_result(q, tag) }
-        message = questions.inject('') {|sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
-        try_send_msg_and_wait(message)
-      rescue TimeoutError
-        timeout_count += 1
-        if timeout_count == 10
-          try_send_msg_and_wait('Failed with TimeoutError')
-          raise
-        end
-      rescue Interrupt
-        raise StopIteration
-      rescue Exception => e
-        try_send_msg_and_wait("#{e.class} - #{e.message}\n#{e.backtrace.join("\n")}")
-        raise
-      end
-    end
-  end
-
-  def log_result(questions, tag)
-    results_count = questions.size
-    if @logger && results_count > 0
-      @logger.info("Found %d results for '%s' tag" % [results_count, tag])
-    end
-  end
-
-  private
-
-  def try_send_msg_and_wait msg
-    # if I make the same query more often than once per minute then it is considered abusive on api level
-    @view.send_msg_and_do(msg) { sleep(61) }
-  end
-end
+require_relative '../lib/watcher'
+require_relative '../lib/view_xmpp'
 
 logger = Logger.new(STDOUT).tap {|l| Blather.logger = l; l.level = Logger::INFO }
 
-view = Xmpp::QuestionsManager.new xmpp_client_id, *blather_daemon_credentials
+view = View::Xmpp::QuestionsManagerView.new xmpp_client_id, *blather_daemon_credentials
 
-watcher = QuestionsWatcher.new get_se_client(), view, logger
+watcher = Watcher::QuestionsWatcher.new get_se_client(), view, logger
 
-watcher.watch_tags
+watcher.watch_tags # 'ruby' as a parameter
