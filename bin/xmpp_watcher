@@ -8,8 +8,10 @@ require_relative '../lib/view_xmpp'
 
 logger = Logger.new(STDOUT).tap {|l| Blather.logger = l; l.level = Logger::INFO }
 
-view = View::Xmpp::QuestionsManagerView.new xmpp_client_id, *blather_daemon_credentials
+view = View::Xmpp::Messenger.new xmpp_client_id, *blather_daemon_credentials
 
-watcher = Watcher::QuestionsWatcher.new get_se_client(), view, logger
+requestor = get_se_client()
+qm = StackExchange::QuestionsManager.new(requestor, logger)
+watcher = Watcher::QuestionsWatcher.new qm, view, logger
 
 watcher.watch_tags 'ruby'

@@ -4,7 +4,7 @@ require_relative 'support/init_se'
 requestor = get_se_client()
 
 qm = StackExchange::QuestionsManager.new(requestor)
-view = View::Cli::QuestionsManagerView.new
+view = View::Cli::QuestionsManager.new
 loop do
   begin
     questions = qm.get_new_questions('ruby')

@@ -3,4 +3,4 @@ module View
 end
 
 require 'view'
-require 'view/xmpp/questions_manager_view'
+require 'view/xmpp/messenger'

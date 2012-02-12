@@ -1,7 +1,7 @@
 require 'blather/client/client'
 require 'blather/client/dsl'
 
-class View::Xmpp::QuestionsManagerView
+class View::Xmpp::Messenger
   include Blather::DSL
 
   def initialize client_id, daemon_id, daemon_pass

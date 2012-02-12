@@ -1,7 +1,7 @@
-# TODO: write tests and extend this class to monitor several different tags and several sites
+# TODO: extend this class to monitor several different tags and several sites
 class Watcher::QuestionsWatcher
-  def initialize requestor, view, logger = nil
-    @qm = StackExchange::QuestionsManager.new(requestor, logger)
+  def initialize qm, view, logger = nil
+    @qm = qm
     @view = view
     @logger = logger
   end
@@ -28,14 +28,14 @@ class Watcher::QuestionsWatcher
     end
   end
 
+  private
+
   def log_result(questions, tag)
     results_count = questions.size
     if @logger && results_count > 0
       @logger.info("Found %d results for '%s' tag" % [results_count, tag])
     end
   end
-
-  private
 
   def try_send_msg_and_wait msg
     # if I make the same query more often than once per minute then it is considered abusive on api level
