@@ -33,6 +33,12 @@ describe Watcher::QuestionsWatcher do
         view.should_receive(:send_msg_and_wait).with('Failed with TimeoutError', 61).once
         expect { subject.check_tag('ruby') }.to raise_error(::TimeoutError)
       end
+
+      it 'sends unexpected error to the view' do
+        qm.should_receive(:get_new_questions).and_raise NotImplementedError.new 'Test error'
+        view.should_receive(:send_msg_and_wait).with(/^NotImplementedError - Test error\n/, 61)
+        expect { subject.check_tag('ruby') }.to raise_error NotImplementedError
+      end
     end
   end
 end
