@@ -26,6 +26,13 @@ describe Watcher::QuestionsWatcher do
 
         subject.check_tag('ruby')
       end
+
+      it 'tries to reconnect 10 times when gets TimeoutError and if not, it raise error' do
+        require 'timeout'
+        qm.should_receive(:get_new_questions).with(any_args).exactly(10).times.and_raise(::TimeoutError)
+        view.should_receive(:send_msg_and_wait).with('Failed with TimeoutError', 61).once
+        expect { subject.check_tag('ruby') }.to raise_error(::TimeoutError)
+      end
     end
   end
 end
