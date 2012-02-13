@@ -1,3 +1,4 @@
+require 'timeout'
 # TODO: extend this class to monitor several different tags and several sites
 class Watcher::QuestionsWatcher
   def initialize qm, view, logger = nil
