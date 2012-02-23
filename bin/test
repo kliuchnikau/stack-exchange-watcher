@@ -9,6 +9,55 @@ user = um.find_from_country("Belarus", 1000)  # WARNING: Expected execution time
 View::Cli::UserManagerView.new.show_list(user)
 
 =begin
+As of February, 23 2012
+page 240
+got users 23993
+Found 42 users from Belarus:
+Id: 137350, Name: Vladimir, Reputation: 50818, Link: http://stackoverflow.com/users/137350/
+Id: 244297, Name: eugene y, Reputation: 25897, Link: http://stackoverflow.com/users/244297/
+Id: 508601, Name: Andrew Orsich, Reputation: 11599, Link: http://stackoverflow.com/users/508601/
+Id: 301607, Name: StanislavL, Reputation: 10291, Link: http://stackoverflow.com/users/301607/
+Id: 354067, Name: Vasil Remeniuk, Reputation: 9096, Link: http://stackoverflow.com/users/354067/
+Id: 119224, Name: queen3, Reputation: 6647, Link: http://stackoverflow.com/users/119224/
+Id: 125805, Name: neutrino, Reputation: 6075, Link: http://stackoverflow.com/users/125805/
+Id: 336626, Name: nash, Reputation: 5237, Link: http://stackoverflow.com/users/336626/
+Id: 186710, Name: Li0liQ, Reputation: 4741, Link: http://stackoverflow.com/users/186710/
+Id: 357743, Name: KL-7, Reputation: 4641, Link: http://stackoverflow.com/users/357743/
+Id: 158689, Name: Alex Kliuchnikau, Reputation: 4520, Link: http://stackoverflow.com/users/158689/
+Id: 949476, Name: dfsq, Reputation: 4477, Link: http://stackoverflow.com/users/949476/
+Id: 781150, Name: Artsiom Rudzenka, Reputation: 3935, Link: http://stackoverflow.com/users/781150/
+Id: 592882, Name: Timofei Davydik, Reputation: 3008, Link: http://stackoverflow.com/users/592882/
+Id: 895121, Name: Andrej L, Reputation: 2719, Link: http://stackoverflow.com/users/895121/
+Id: 575421, Name: Nikita Beloglazov, Reputation: 2632, Link: http://stackoverflow.com/users/575421/
+Id: 544505, Name: Andrei Andrushkevich, Reputation: 2481, Link: http://stackoverflow.com/users/544505/
+Id: 355130, Name: NR4TR, Reputation: 2402, Link: http://stackoverflow.com/users/355130/
+Id: 298088, Name: Nagg, Reputation: 2230, Link: http://stackoverflow.com/users/298088/
+Id: 377133, Name: DotNET Ninja, Reputation: 2191, Link: http://stackoverflow.com/users/377133/
+Id: 55350, Name: Andrei K., Reputation: 2049, Link: http://stackoverflow.com/users/55350/
+Id: 219931, Name: Dziamid, Reputation: 2026, Link: http://stackoverflow.com/users/219931/
+Id: 496265, Name: alpha-mouse, Reputation: 2015, Link: http://stackoverflow.com/users/496265/
+Id: 492865, Name: Yuras, Reputation: 1801, Link: http://stackoverflow.com/users/492865/
+Id: 318502, Name: Andrei, Reputation: 1598, Link: http://stackoverflow.com/users/318502/
+Id: 242325, Name: fantactuka, Reputation: 1572, Link: http://stackoverflow.com/users/242325/
+Id: 578, Name: axk, Reputation: 1518, Link: http://stackoverflow.com/users/578/
+Id: 108533, Name: Guard, Reputation: 1511, Link: http://stackoverflow.com/users/108533/
+Id: 542659, Name: woodshy, Reputation: 1498, Link: http://stackoverflow.com/users/542659/
+Id: 331488, Name: Michael Sagalovich, Reputation: 1407, Link: http://stackoverflow.com/users/331488/
+Id: 172159, Name: OneOfThem, Reputation: 1286, Link: http://stackoverflow.com/users/172159/
+Id: 126529, Name: Alexey, Reputation: 1268, Link: http://stackoverflow.com/users/126529/
+Id: 29300, Name: Valera Kolupaev, Reputation: 1247, Link: http://stackoverflow.com/users/29300/
+Id: 244026, Name: Victor, Reputation: 1174, Link: http://stackoverflow.com/users/244026/
+Id: 273699, Name: DNNX, Reputation: 1162, Link: http://stackoverflow.com/users/273699/
+Id: 854386, Name: Andrey, Reputation: 1152, Link: http://stackoverflow.com/users/854386/
+Id: 607959, Name: Alexander Yezutov, Reputation: 1150, Link: http://stackoverflow.com/users/607959/
+Id: 239354, Name: Aldarund, Reputation: 1127, Link: http://stackoverflow.com/users/239354/
+Id: 470005, Name: lazyberezovsky, Reputation: 1089, Link: http://stackoverflow.com/users/470005/
+Id: 698718, Name: Mark Guk, Reputation: 1031, Link: http://stackoverflow.com/users/698718/
+Id: 324117, Name: andr, Reputation: 1025, Link: http://stackoverflow.com/users/324117/
+Id: 1037042, Name: Alexey Savanovich, Reputation: 1005, Link: http://stackoverflow.com/users/1037042/
+=end
+
+=begin
 
 As of January, 30 2012
 page 231
