@@ -4,3 +4,4 @@ stats/
 jabber.yml
 rdoc/
 bin/
+.bundle/
