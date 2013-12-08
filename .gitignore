@@ -5,3 +5,4 @@ jabber.yml
 rdoc/
 .bundle/
 .binstubs/
+hipchat.yml
