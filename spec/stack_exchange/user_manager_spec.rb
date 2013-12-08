@@ -8,13 +8,13 @@ describe StackExchange::UserManager do
     StackExchange::UserManager.new api_requestor
   end
   def mock_page_call(page_no, users_return, total = users_return.count, pagesize = 100)
-    users = mock('Users')
+    users = double('Users')
     api_requestor.should_receive(:users).and_return(users)
     res = fake_users_result(users_return, total, page_no, pagesize)
     users.should_receive(:fetch).with({:pagesize => pagesize, :page => page_no}).and_return(res)
   end
   def mock_users_call_with_reputation(reputation, returns)
-    users = stub('User')
+    users = double('User')
     api_requestor.should_receive(:users).and_return(users)
     users.should_receive(:fetch).with(pagesize: 100, page: 1, min: reputation).and_return(returns)
   end

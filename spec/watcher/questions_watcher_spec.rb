@@ -48,7 +48,7 @@ describe Watcher::QuestionsWatcher do
 
     context 'when logger specified' do
       it 'should log result received from questions manager to logger' do
-        logger = mock('logger')
+        logger = double('logger')
         subj =  Watcher::QuestionsWatcher.new(qm, view, logger)
 
         qm.stub(:get_new_questions).and_return Array.new(3, fake_msg(Time.now))
