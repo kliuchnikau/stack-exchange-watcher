@@ -7,5 +7,4 @@ group :development do
   gem 'rspec'
   gem 'cucumber'
   gem 'ZenTest'
-  gem 'foobar'
 end
