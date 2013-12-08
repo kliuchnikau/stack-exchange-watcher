@@ -4,9 +4,9 @@ require_relative 'support/init_se'
 require_relative 'support/hipchat_config'
 require 'logger'
 require_relative '../lib/watcher'
-require_relative '../lib/view_xmpp'
+require_relative '../lib/view_hipchat'
 
-view = View::Hipchat::Messenger.new(hipchat_config.token_id, hipchat_config.room_id)
+view = View::Hipchat::Messenger.new(hipchat_config.token, hipchat_config.room)
 view.logger = Logger.new(STDOUT)
 
 requestor = get_se_client()

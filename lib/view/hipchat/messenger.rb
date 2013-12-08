@@ -5,8 +5,13 @@ class View::Hipchat::Messenger
     @token_id, @room_id, @from_who = token_id, room_id, from_who
   end
 
+  def send_msg(message)
+    hipchat_client[@room_id].send(@from_who, message, notify: true, message_format: 'text')
+    logger.info("Sent to hipchat: #{message}")
+  end
+
   def send_msg_and_wait(message, sec)
-    client[@room_id].send(@from_who, message)
+    send_msg(message)
     sleep sec
   end
 
