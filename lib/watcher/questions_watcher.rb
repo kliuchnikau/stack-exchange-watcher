@@ -1,4 +1,6 @@
 require 'timeout'
+require 'net/http'
+
 # TODO: extend this class to monitor several different tags and several sites
 class Watcher::QuestionsWatcher
   def initialize qm, view, logger = nil
@@ -31,6 +33,9 @@ class Watcher::QuestionsWatcher
     loop do
       begin
         check_tag(tag)
+      rescue SocketError
+        @logger.error(e.message)
+        sleep 10
       rescue Interrupt
         raise StopIteration
       end
