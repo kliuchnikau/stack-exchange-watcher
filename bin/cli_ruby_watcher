@@ -2,9 +2,10 @@
 require_relative 'support/init'
 require_relative 'support/init_se'
 requestor = get_se_client()
+require 'byebug'
 
 qm = StackExchange::QuestionsManager.new(requestor)
-view = View::Cli::QuestionsManager.new
+view = View::Cli::QuestionsManagerView.new
 loop do
   begin
     questions = qm.get_new_questions('ruby')

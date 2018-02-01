@@ -15,6 +15,7 @@ GEM
       niceogiri (~> 1.0)
       nokogiri (~> 1.5, >= 1.5.6, <= 1.6.1)
     builder (3.2.3)
+    byebug (10.0.0)
     concurrent-ruby (1.0.5)
     connection_pool (1.2.0)
     cucumber (3.1.0)
@@ -37,6 +38,8 @@ GEM
     eventmachine (1.2.5)
     faraday (0.14.0)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.12.2)
+      faraday (>= 0.7.4, < 1.0)
     gherkin (5.0.0)
     girl_friday (0.11.2)
       connection_pool (~> 1.0)
@@ -91,7 +94,9 @@ PLATFORMS
 DEPENDENCIES
   ZenTest
   blather
+  byebug
   cucumber
+  faraday_middleware
   hipchat
   rspec
   rubyoverflow (~> 2.0.2.pre1)
