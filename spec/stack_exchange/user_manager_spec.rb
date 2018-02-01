@@ -29,7 +29,7 @@ describe StackExchange::UserManager do
 
       users_list = user_manager.all_users
 
-      users_list.should have(154).users
+      expect(users_list.count).to eq 154
     end
 
     context 'when reputation filter provided' do
@@ -52,8 +52,8 @@ describe StackExchange::UserManager do
 
         users_list = user_manager.find_from_country 'Minsk'
 
-        users_list.should have(50).users
-        users_list.all? {|u| u.location =~ /Minsk/i}
+        expect(users_list.count).to eq 50
+        expect(users_list.all? {|u| u.location =~ /Minsk/i}).to be_truthy
       end
     end
 
