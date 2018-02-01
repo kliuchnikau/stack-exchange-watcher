@@ -6,8 +6,12 @@ class View::Hipchat::Messenger
   end
 
   def send_msg(message)
-    hipchat_client[@room_id].send(@from_who, message, notify: true, message_format: 'text')
-    logger.info("Sent to hipchat: #{message}")
+    if message.empty?
+      hipchat_client[@room_id].send(@from_who, message, notify: true, message_format: 'text')
+      logger.info("Sent to hipchat: #{message}")
+    else
+      logger.info("No new messages for hipchat")
+    end
   end
 
   def send_msg_and_wait(message, sec)
