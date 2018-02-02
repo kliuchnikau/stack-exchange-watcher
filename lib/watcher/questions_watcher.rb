@@ -15,10 +15,10 @@ class Watcher::QuestionsWatcher
       questions = @qm.get_new_questions(tag).tap { |q| log_result(q, tag) }
       message = questions.inject('') { |sum, qst| sum + "\n" + View::QuestionsFormat.format_question('http://www.stackoverflow.com', qst) }
       try_send_msg_and_wait(message)
-    rescue TimeoutError
+    rescue Timeout::Error
       timeout_count += 1
       if timeout_count == 10
-        try_send_msg_and_wait('Failed with TimeoutError')
+        try_send_msg_and_wait('Failed with Timeout::Error')
         raise
       end
       retry
