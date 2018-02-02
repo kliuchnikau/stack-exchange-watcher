@@ -1,5 +1,6 @@
 require 'timeout'
 require 'net/http'
+require 'faraday'
 
 # TODO: extend this class to monitor several different tags and several sites
 class Watcher::QuestionsWatcher
@@ -33,7 +34,7 @@ class Watcher::QuestionsWatcher
     loop do
       begin
         check_tag(tag)
-      rescue SocketError => e
+      rescue Faraday::ClientError, SocketError => e
         @logger.error(e.message)
         sleep 10
       rescue Interrupt
