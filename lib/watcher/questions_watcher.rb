@@ -33,7 +33,7 @@ class Watcher::QuestionsWatcher
     loop do
       begin
         check_tag(tag)
-      rescue SocketError
+      rescue SocketError => e
         @logger.error(e.message)
         sleep 10
       rescue Interrupt
