@@ -1,3 +1,8 @@
 {<img src="https://secure.travis-ci.org/kliuchnikau/stack-exchange-watcher.png" />}[http://travis-ci.org/kliuchnikau/stack-exchange-watcher]
 
-Daemon to watch for new questions on stack exchange sites.
+Daemon to notify about new questions in a tag on stack exchange sites (stackoverflow.com etc.).
+
+Writes messages to different destinations:
+- CLI
+- HipChat
+- Slack (pending)
