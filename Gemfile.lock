@@ -33,7 +33,7 @@ GEM
       mimemagic
     httparty (0.15.6)
       multi_xml (>= 0.5.2)
-    json (2.1.0)
+    json (2.3.1)
     mimemagic (0.3.2)
     multi_json (1.13.1)
     multi_test (0.1.2)
